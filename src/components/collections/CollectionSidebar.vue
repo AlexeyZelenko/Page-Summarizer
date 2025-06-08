@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>Collections</h3>
-      <Button icon="pi pi-plus" text rounded @click="isAddDialogVisible = true" v-tooltip.bottom="'New Collection'" />
+      <Button style="color: cyan;" icon="pi pi-plus" severity="info" text label="New" @click="isAddDialogVisible = true" v-tooltip.bottom="'New Collection'" />
     </div>
     <div class="collection-list">
       <a 
@@ -29,7 +29,7 @@
         <Button 
           icon="pi pi-trash" 
           text 
-          rounded 
+          label="Delete"
           class="delete-btn" 
           v-tooltip.bottom="'Delete Collection'"
           @click.stop="confirmDelete(collection)" 
@@ -45,8 +45,8 @@
         </div>
       </div>
       <template #footer>
-        <Button label="Cancel" icon="pi pi-times" text @click="isAddDialogVisible = false" />
-        <Button label="Save" icon="pi pi-check" @click="handleAddNewCollection" :loading="isAdding" />
+        <Button label="Cancel" rounded icon="pi pi-times" text @click="isAddDialogVisible = false" />
+        <Button label="Save" rounded icon="pi pi-check" @click="handleAddNewCollection" :loading="isAdding" />
       </template>
     </Dialog>
 
@@ -137,6 +137,7 @@ const confirmDelete = (collection: Collection) => {
   border-radius: 6px;
   text-decoration: none;
   color: #495057;
+  background-color: #858b90;
   font-weight: 500;
   transition: background-color 0.2s;
   justify-content: space-between;
@@ -146,11 +147,12 @@ const confirmDelete = (collection: Collection) => {
 }
 .collection-item.active {
   background-color: #eef2ff;
-  color: #4338ca;
+  color: #949497;
   font-weight: 600;
 }
 .collection-item i {
   font-size: 1.1rem;
+  color: #475569;
 }
 .collection-item-main {
   display: flex;
@@ -158,21 +160,11 @@ const confirmDelete = (collection: Collection) => {
   gap: 0.75rem;
   flex-shrink: 1;
   overflow: hidden;
+  color: #475569;
 }
 .collection-item-main span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.delete-btn {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.2s, visibility 0.2s;
-  flex-shrink: 0;
-}
-.collection-item:hover .delete-btn {
-  visibility: visible;
-  opacity: 1;
 }
 </style> 

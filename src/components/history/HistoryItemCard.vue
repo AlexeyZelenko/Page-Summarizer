@@ -17,10 +17,10 @@
           <Badge :value="item.settings.language" class="custom-badge lang-badge" />
         </div>
         <div class="item-actions">
-          <Button icon="pi pi-folder-open" rounded v-tooltip.bottom="'Move to collection'" @click="emit('open-collection-menu', $event, item)" />
-          <Button icon="pi pi-copy" rounded v-tooltip.bottom="'Copy Summary'" @click="emit('copy', item.summary)" />
-          <Button icon="pi pi-trash" rounded severity="danger" v-tooltip.bottom="'Delete'" @click="emit('delete', item.id)" />
-          <Button icon="pi pi-eye" rounded v-tooltip.bottom="'View Details'" @click="emit('view-details', item)" />
+          <Button icon="pi pi-folder-open" label="Move to collection" v-tooltip.bottom="'Move to collection'" @click="emit('open-collection-menu', $event, item)" />
+          <Button icon="pi pi-copy" label="Copy Summary" v-tooltip.bottom="'Copy Summary'" @click="emit('copy', item.summary)" />
+          <Button icon="pi pi-trash" label="Delete" rounded severity="danger" v-tooltip.bottom="'Delete'" @click="emit('delete', item.id)" />
+          <Button icon="pi pi-eye" label="View Details" rounded v-tooltip.bottom="'View Details'" @click="emit('view-details', item)" />
         </div>
       </div>
     </template>
@@ -92,8 +92,4 @@ const getShortUrl = (url: string): string => {
 .lang-badge { background-color: #fffbeb; color: #b45309; }
 .item-actions { display: flex; gap: 0.5rem; }
 .history-item .item-actions { opacity: 1; visibility: visible; }
-.item-actions .p-button { background: #f1f5f9; color: #64748b; border: none; width: 2.25rem; height: 2.25rem; }
-.item-actions .p-button:hover { background: #e2e8f0; color: #1e293b; }
-.item-actions .p-button.p-button-danger { background: #fef2f2; color: #ef4444; }
-.item-actions .p-button.p-button-danger:hover { background: #fee2e2; color: #dc2626; }
 </style> 

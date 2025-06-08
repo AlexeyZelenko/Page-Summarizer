@@ -8,7 +8,7 @@
       @delete="emit('delete', $event)"
       @copy="emit('copy', $event)"
       @view-details="emit('view-details', $event)"
-      @open-collection-menu="emit('open-collection-menu', $event[0], $event[1])"
+      @open-collection-menu="onOpenCollectionMenu"
     />
   </div>
 </template>
@@ -23,4 +23,8 @@ defineProps<{
 }>();
 
 const emit = defineEmits(['delete', 'copy', 'view-details', 'open-collection-menu']);
+
+const onOpenCollectionMenu = (event: Event, item: SummaryHistoryItem) => {
+  emit('open-collection-menu', event, item);
+};
 </script> 
