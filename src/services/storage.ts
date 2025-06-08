@@ -1,85 +1,60 @@
 import type { SummarySettings, SummaryHistoryItem } from '../types'
 
-class StorageService {
-  private readonly SETTINGS_KEY = 'summarizer_settings'
-  private readonly HISTORY_KEY = 'summarizer_history'
-  private readonly MAX_HISTORY_ITEMS = 50
+const SETTINGS_KEY = 'summarizer_settings'
+const HISTORY_KEY = 'summarizer_history'
 
+class StorageService {
   async saveSettings(settings: SummarySettings): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (!chrome?.storage?.local) {
-        reject(new Error('Chrome storage API not available'))
-        return
-      }
-
-      chrome.storage.local.set({ [this.SETTINGS_KEY]: settings }, () => {
+      chrome.storage.local.set({ [SETTINGS_KEY]: settings }, () => {
         if (chrome.runtime.lastError) {
-          reject(new Error(chrome.runtime.lastError.message))
-        } else {
-          resolve()
+          return reject(chrome.runtime.lastError)
         }
+        resolve()
       })
     })
   }
 
-  async getSettings(): Promise<SummarySettings | null> {
+  async getSettings(): Promise<SummarySettings> {
     return new Promise((resolve, reject) => {
-      if (!chrome?.storage?.local) {
-        reject(new Error('Chrome storage API not available'))
-        return
-      }
-
-      chrome.storage.local.get([this.SETTINGS_KEY], (result) => {
+      chrome.storage.local.get(SETTINGS_KEY, (result) => {
         if (chrome.runtime.lastError) {
-          reject(new Error(chrome.runtime.lastError.message))
-        } else {
-          resolve(result[this.SETTINGS_KEY] || null)
+          return reject(chrome.runtime.lastError)
         }
+        resolve(result[SETTINGS_KEY] as SummarySettings)
       })
     })
   }
 
   async saveHistory(history: SummaryHistoryItem[]): Promise<void> {
-    // Limit history size
-    const limitedHistory = history.slice(0, this.MAX_HISTORY_ITEMS)
-    
+    // Sort by date descending before saving
+    const sortedHistory = history.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
     return new Promise((resolve, reject) => {
-      if (!chrome?.storage?.local) {
-        reject(new Error('Chrome storage API not available'))
-        return
-      }
-
-      chrome.storage.local.set({ [this.HISTORY_KEY]: limitedHistory }, () => {
+      chrome.storage.local.set({ [HISTORY_KEY]: sortedHistory }, () => {
         if (chrome.runtime.lastError) {
-          reject(new Error(chrome.runtime.lastError.message))
-        } else {
-          resolve()
+          return reject(chrome.runtime.lastError)
         }
+        resolve()
       })
     })
   }
 
   async getHistory(): Promise<SummaryHistoryItem[]> {
     return new Promise((resolve, reject) => {
-      if (!chrome?.storage?.local) {
-        reject(new Error('Chrome storage API not available'))
-        return
-      }
-
-      chrome.storage.local.get([this.HISTORY_KEY], (result) => {
+      chrome.storage.local.get(HISTORY_KEY, (result) => {
         if (chrome.runtime.lastError) {
-          reject(new Error(chrome.runtime.lastError.message))
-        } else {
-          const history = result[this.HISTORY_KEY] || []
-          // Convert timestamp strings back to Date objects
-          const processedHistory = history.map((item: any) => ({
-            ...item,
-            timestamp: new Date(item.timestamp)
-          }))
-          resolve(processedHistory)
+          return reject(chrome.runtime.lastError)
         }
+        const history = result[HISTORY_KEY] || []
+        resolve(history as SummaryHistoryItem[])
       })
     })
+  }
+
+  async deleteHistoryItem(id: string): Promise<void> {
+    const history = await this.getHistory()
+    const filteredHistory = history.filter(item => item.id !== id)
+    await this.saveHistory(filteredHistory)
   }
 
   async clearHistory(): Promise<void> {

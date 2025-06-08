@@ -4,16 +4,27 @@
       <div class="card-title">
         <i class="pi pi-history"></i>
         Recent Summaries
-        <Button 
-          v-if="history.length > 0"
-          icon="pi pi-trash"
-          size="small"
-          text
-          severity="danger"
-          @click="$emit('clear-history')"
-          v-tooltip="'Clear all history'"
-          class="clear-btn"
-        />
+        <div class="title-buttons">
+          <Button
+            icon="pi pi-external-link"
+            size="small"
+            text
+            severity="secondary"
+            @click="openHistoryPage"
+            v-tooltip="'Open full history'"
+            class="history-link-btn"
+          />
+          <Button
+            v-if="history.length > 0"
+            icon="pi pi-trash"
+            size="small"
+            text
+            severity="danger"
+            @click="$emit('clear-history')"
+            v-tooltip="'Clear all history'"
+            class="clear-btn"
+          />
+        </div>
       </div>
     </template>
     
@@ -85,18 +96,29 @@ const truncateText = (text: string, maxLength: number): string => {
   return text.length > maxLength ? text.substring(0, maxLength) + '...' : text
 }
 
-const formatTime = (timestamp: Date): string => {
-  const now = new Date()
-  const diff = now.getTime() - new Date(timestamp).getTime()
-  const minutes = Math.floor(diff / (1000 * 60))
-  const hours = Math.floor(diff / (1000 * 60 * 60))
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+const openHistoryPage = () => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('history.html') });
+};
+
+const formatTime = (timestamp: Date | string): string => {
+  const date = new Date(timestamp);
+  if (isNaN(date.getTime())) {
+    return 'Invalid date';
+  }
   
-  if (minutes < 1) return 'just now'
-  if (minutes < 60) return `${minutes}m ago`
-  if (hours < 24) return `${hours}h ago`
-  return `${days}d ago`
-}
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const diffSeconds = Math.floor(diff / 1000);
+  const diffMinutes = Math.floor(diffSeconds / 60);
+  const diffHours = Math.floor(diffMinutes / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffDays > 0) return `${diffDays}d ago`;
+  if (diffHours > 0) return `${diffHours}h ago`;
+  if (diffMinutes > 0) return `${diffMinutes}m ago`;
+  if (diffSeconds < 5) return 'just now';
+  return `${diffSeconds}s ago`;
+};
 </script>
 
 <style scoped>
@@ -111,7 +133,13 @@ const formatTime = (timestamp: Date): string => {
   font-size: 1.1rem;
   font-weight: 600;
   color: #374151;
-  position: relative;
+  width: 100%;
+}
+
+.title-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .clear-btn {

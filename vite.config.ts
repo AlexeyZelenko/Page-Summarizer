@@ -10,7 +10,8 @@ export default defineConfig({
       input: {
         main: 'index.html',
         content: 'src/content.ts',
-        background: 'src/background.ts'
+        background: 'src/background.ts',
+        history: 'history.html'
       },
       output: {
         // Ensure consistent file names for chrome extension
