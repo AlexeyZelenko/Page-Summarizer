@@ -84,14 +84,14 @@ class StorageService {
     });
   }
 
-  async deleteHistoryItem(id: string): Promise<void> {
+  public async clearHistory(): Promise<void> {
+    return this.saveHistory([]);
+  }
+
+  public async deleteHistoryItem(id: string): Promise<void> {
     const history = await this.getHistory()
     const filteredHistory = history.filter(item => item.id !== id)
     await this.saveHistory(filteredHistory)
-  }
-
-  async clearHistory(): Promise<void> {
-    return this.saveHistory([])
   }
 
   public async updateHistoryItem(updatedItem: SummaryHistoryItem): Promise<void> {
