@@ -37,10 +37,7 @@
 
               <div class="card-footer">
                 <div class="item-tags">
-                  <span class="collection-tag" v-if="item.collectionId" v-tooltip.bottom="getCollectionName(item.collectionId)">
-                    <i class="pi pi-folder"></i>
-                    <span>{{ getCollectionName(item.collectionId) }}</span>
-                  </span>
+                  <Badge v-if="item.collectionId" :value="getCollectionName(item.collectionId)" class="custom-badge collection-badge" v-tooltip.bottom="'Collection'" />
                   <Badge :value="item.settings.length" class="custom-badge length-badge" />
                   <Badge :value="item.settings.type.replace('_', ' ')" class="custom-badge type-badge" />
                   <Badge :value="item.settings.language" class="custom-badge lang-badge" />
@@ -252,6 +249,9 @@ const formatDate = (date: Date): string => {
   position: sticky;
   top: 0;
   z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .page-title {
   font-size: 1.75rem;
@@ -348,19 +348,10 @@ const formatDate = (date: Date): string => {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-.collection-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background-color: #f3f4f6;
-  color: #4b5563;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.collection-tag .pi {
-  font-size: 0.9rem;
+.collection-badge {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  text-transform: capitalize;
 }
 .custom-badge {
   font-size: 0.8rem;
@@ -370,16 +361,16 @@ const formatDate = (date: Date): string => {
   text-transform: capitalize;
 }
 .length-badge {
-  background-color: #e0e7ff;
-  color: #3730a3;
+  background-color: #dcfce7;
+  color: #166534;
 }
 .type-badge {
-  background-color: #d1fae5;
-  color: #065f46;
+  background-color: #f3e8ff;
+  color: #6b21a8;
 }
 .lang-badge {
-  background-color: #fef3c7;
-  color: #92400e;
+  background-color: #fffbeb;
+  color: #b45309;
 }
 .item-actions {
   display: flex;

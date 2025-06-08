@@ -113,7 +113,16 @@ const confirmDelete = (collection: Collection) => {
 }
 .sidebar-header h3 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+.sidebar-header .p-button {
+    color: #475569;
+}
+.sidebar-header .p-button:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
 }
 .collection-list {
   display: flex;
@@ -136,8 +145,9 @@ const confirmDelete = (collection: Collection) => {
   background-color: #f1f5f9;
 }
 .collection-item.active {
-  background-color: #e2e8f0;
-  color: #1e293b;
+  background-color: #eef2ff;
+  color: #4338ca;
+  font-weight: 600;
 }
 .collection-item i {
   font-size: 1.1rem;
