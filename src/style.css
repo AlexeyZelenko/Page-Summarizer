@@ -1,0 +1,117 @@
+:root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1f2937;
+  background-color: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 400px;
+  min-height: 600px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+#app {
+  width: 400px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.extension-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* PrimeVue theme customizations */
+.p-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.p-card-header {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 12px 12px 0 0;
+}
+
+.p-button {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.p-button:hover {
+  transform: translateY(-1px);
+}
+
+.p-input-icon-right > .p-inputtext {
+  border-radius: 8px;
+}
+
+.p-select {
+  border-radius: 8px;
+}
+
+.p-radiobutton .p-radiobutton-box {
+  border-radius: 50%;
+}
+
+.p-progressspinner {
+  width: 32px;
+  height: 32px;
+}
+
+.p-toast {
+  width: 350px;
+}
+
+/* Utility classes */
+.w-full {
+  width: 100%;
+}
+
+.text-primary {
+  color: #3B82F6;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
