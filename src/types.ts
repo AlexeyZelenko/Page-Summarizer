@@ -1,3 +1,9 @@
+export interface Collection {
+  id: string;
+  name: string;
+  createdAt: Date;
+}
+
 export interface SummarySettings {
   apiKey: string;
   summaryLength: 'short' | 'medium' | 'detailed';
@@ -11,6 +17,7 @@ export interface SummaryHistoryItem {
   title: string;
   summary: string;
   timestamp: Date;
+  collectionId?: string;
   settings: {
     length: 'short' | 'medium' | 'detailed';
     type: 'key_points' | 'narrative' | 'technical';
